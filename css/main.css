@@ -1,0 +1,142 @@
+* {
+  box-sizing: border-box;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.container {
+  width: 600px;
+  margin: 30px auto;
+}
+
+.form {
+  display: flex;
+}
+
+.form,
+.tasks {
+  background-color: #EEE;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+.form .input,
+.form .add {
+  padding: 10px;
+  border: 1px solid #DDD;
+  font-size: 15px;
+  border-radius: 5px;
+}
+
+.form .input {
+  outline: none;
+  border-color: #CCC;
+}
+
+.form .add {
+  background-color: #f44336;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.form .input {
+  flex: 1;
+  margin-right: 10px;
+}
+
+.form .add {
+  width: 100px;
+}
+
+.tasks {
+  margin-top: 20px;
+}
+
+.tasks .task {
+  background-color: white;
+  padding: 10px;
+  padding-left: 50px;
+  margin-top: 20px;
+  font-size: 18px;
+  border-radius: 5px;
+  position: relative;
+  cursor: pointer;
+}
+
+.tasks .task:hover {
+  opacity: 0.9;
+}
+
+.tasks .task.done {
+  opacity: 0.5;
+}
+
+.tasks .task:first-child {
+  margin-top: 0;
+}
+
+.task input {
+  position: absolute;
+  margin: 0;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  height: 25px;
+  width: 25px;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 1;
+}
+
+.checkmark {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  height: 25px;
+  width: 25px;
+  border-radius: 4px;
+  background-color: #f44336;
+  opacity: 0.6;
+}
+
+.task input:hover ~ .checkmark{
+  opacity: 1;
+}
+
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+input:checked ~ .checkmark{
+  opacity: 1;
+}
+
+input:checked ~ .checkmark:after {
+  display: block;
+}
+
+.checkmark:after {
+  left: 50%;
+  top: 50%;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.tasks .task .del {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #f44336;
+  color: white;
+  padding: 5px;
+  font-size: 14px;
+  border-radius: 4px;
+  cursor: pointer;
+}
