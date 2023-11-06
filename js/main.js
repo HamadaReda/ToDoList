@@ -1,6 +1,7 @@
 let input = document.querySelector(".input");
 let submit = document.querySelector(".add");
 let taskDiv = document.querySelector(".tasks");
+let deleteAllButton = document.querySelector(".delete-all");
 
 // localStorage.clear();
 // Empty Array To Store Tasks
@@ -9,13 +10,26 @@ let arrayOfTasks = [];
 // Trigger Get Data From Local Storage
 getDataFromLocalStorage();
 
-// Add Task
+// Add Task By Submit Button
 submit.onclick = function () {
+  addTask();
+};
+
+// Add Task By Enter Key
+input.addEventListener("keydown", function (event) {
+  if (event.key === "Enter" || event.keyCode === 13) {
+    addTask();
+  }
+});
+
+function addTask() {
   if (input.value !== "") {
     addTaskToArray(input.value); // Add Task To Array Of Tasks
     input.value = ""; // Empty Input Field
   }
-};
+  // Check Opacity Of Delete All Button
+  checkOpacityForDeleteAllButton();
+}
 
 // Click On Task Element
 document.addEventListener("click", (e) => {
@@ -25,12 +39,20 @@ document.addEventListener("click", (e) => {
     e.target.parentElement.remove();
     // Remove Task From Local Storage
     deleteTaskWith(e.target.parentElement.getAttribute("data-id"));
+    // Check Opacity Of Delete All Button
+    checkOpacityForDeleteAllButton();
   }
   // Toggle Completed For The Task
   if (e.target.className === "check") {
     toggleStatusTaskWith(e.target.parentElement.getAttribute("data-id"));
     // Toggle Done Class
     e.target.parentElement.classList.toggle("done");
+  }
+  if (e.target.className === "delete-btn") {
+    taskDiv.innerHTML = "";
+    arrayOfTasks = [];
+    localStorage.clear();
+    deleteAllButton.className = "delete-all";
   }
 });
 
@@ -86,7 +108,10 @@ function addElementsToPageFrom(arrayOfTasks) {
     // Add Task To Tasks Container
     taskDiv.appendChild(div);
   });
+  // Check if there are task in array
+
   addCheckmark();
+  // addDeleteButton();
 }
 
 function addTasksToLocalStorage(arrayOfTasks) {
@@ -100,6 +125,8 @@ function getDataFromLocalStorage() {
   }
   addElementsToPageFrom(arrayOfTasks);
   addCheckmark();
+  // Check Opacity Of Delete All Button
+  checkOpacityForDeleteAllButton();
 }
 
 function deleteTaskWith(taskId) {
@@ -107,6 +134,14 @@ function deleteTaskWith(taskId) {
     return task.id != taskId;
   });
   addTasksToLocalStorage(arrayOfTasks);
+}
+
+function checkOpacityForDeleteAllButton() {
+  if (arrayOfTasks.length > 0) {
+    deleteAllButton.className = "delete-all active";
+  } else {
+    deleteAllButton.className = "delete-all";
+  }
 }
 
 function addCheckmark() {
@@ -117,6 +152,7 @@ function addCheckmark() {
     }
   }
 }
+
 function toggleStatusTaskWith(taskId) {
   for (let i = 0; i < arrayOfTasks.length; i++) {
     if (arrayOfTasks[i].id == taskId) {

@@ -48,6 +48,32 @@
   width: 100px;
 }
 
+.delete-all {
+  margin-top: 20px;
+  padding: 20px;
+  position: relative;
+  opacity: 0.5;
+}
+
+.delete-all.active {
+  opacity: 1;
+}
+
+.delete-all span {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #f44336;
+  color: white;
+  padding: 11px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+
 .tasks {
   margin-top: 20px;
 }
